@@ -25,7 +25,7 @@ public class JobData {
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
-     * @return List of all of the values of the given field
+     * @return List of all the values of the given field
      */
     public static ArrayList<String> findAll(String field) {
 
@@ -75,7 +75,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,8 +94,21 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
+        ArrayList<HashMap<String, String>> results = new ArrayList<>();
+
+        for (HashMap<String, String> job : allJobs){
+            for(String column : job.keySet()){
+                String columnValue = job.get(column);
+                if(columnValue != null && columnValue.toLowerCase().contains(value.toLowerCase())){
+                    results.add(job);
+                    break;
+                }
+            }
+        }
+
+
         // TODO - implement this method
-        return null;
+        return results;
     }
 
     /**
